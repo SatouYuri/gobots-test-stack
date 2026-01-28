@@ -2,7 +2,7 @@ package dev.quatern.marketplace.dto;
 
 import java.time.LocalDateTime;
 
-public record OrderCreateResponseDTO(
+public record OrderUpdateStatusResponseDTO(
     String message,
     Order order
 ) {

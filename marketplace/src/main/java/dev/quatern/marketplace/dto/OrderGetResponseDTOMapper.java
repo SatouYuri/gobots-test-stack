@@ -4,8 +4,8 @@ import dev.quatern.marketplace.model.Order;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface OrderCreateRequestDTOMapper {
+public interface OrderGetResponseDTOMapper {
 
-    Order toEntity(OrderCreateRequestDTO.Order dto);
+    OrderGetResponseDTO.Order toDTO(Order order);
 
 }

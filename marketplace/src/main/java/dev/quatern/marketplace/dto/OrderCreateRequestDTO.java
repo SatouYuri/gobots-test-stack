@@ -1,6 +1,15 @@
 package dev.quatern.marketplace.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public record OrderCreateRequestDTO(
-    String mock
-    // Aqui seriam declarados outros campos para a criação do pedido, tais como id do cliente, lista de itens, etc.
-) {}
+    @NotBlank String storeId,
+    @NotNull Order order
+) {
+
+    public record Order(
+        String mock // Aqui seriam declarados os campos (correspondentes aos da entidade dev.quatern.marketplace.model.Order para fins de mapeamento via MapStruct) para a criação do pedido, tais como cliente, lista de itens, etc.
+    ) {}
+
+}

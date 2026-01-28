@@ -2,14 +2,15 @@ package dev.quatern.marketplace.dto;
 
 import java.time.LocalDateTime;
 
-public record OrderCreateResponseDTO(
+public record StoreUpdateResponseDTO(
     String message,
-    Order order
+    Store store
 ) {
 
-    public record Order(
+    public record Store(
         String id,
-        String status,
+        String name,
+        String callbackUrl,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
     ) {}

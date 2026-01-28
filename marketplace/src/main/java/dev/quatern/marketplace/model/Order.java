@@ -4,6 +4,9 @@ import dev.quatern.marketplace.enums.OrderStatusEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +24,8 @@ public class Order extends Base {
     @Enumerated(EnumType.STRING)
     private OrderStatusEnum status = OrderStatusEnum.CREATED;
 
-    // Aqui seriam declarados outros campos do pedido, tais como cliente, lista de itens, etc.
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "store_id", nullable = false)
+    private Store store;
 
 }
