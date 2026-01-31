@@ -16,8 +16,11 @@ public class EventService extends BaseService<Event> {
     private final MarketplaceClientService marketplaceClientService;
 
     public Event create(Event event) {
-        marketplaceClientService.pullUpdateSubjectAsEventSnapshot(event); //TODO: Cercar isso com try-catch e tratamento com job depois em caso de falha...
-        return eventRepository.save(event);
+        //TODO: Adicionar validação de idempotência (impedir a criação de evento duplicado para o mesmo pedido)
+        Event persistedEvent = eventRepository.save(event);
+        if (event.getMarketplaceSubjectId() != null)
+            marketplaceClientService.fetchSubjectAsEventSnapshot(persistedEvent);
+        return persistedEvent;
     }
 
 }
