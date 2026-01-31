@@ -6,6 +6,7 @@ public record EventListenRequestDTO(
 
     public record Event(
         String type,
+        String subjectType,
         String marketplaceStoreId,
         String marketplaceSubjectId
     ) {}

@@ -23,10 +23,10 @@ public class EventController {
 
     @PostMapping
     public ResponseEntity<EventListenResponseDTO> listen(@RequestBody @Valid EventListenRequestDTO requestDTO) {
-        Event event = eventService.createOrderEvent(eventListenRequestDTOMapper.toEntity(requestDTO.event()));
+        Event event = eventService.create(eventListenRequestDTOMapper.toEntity(requestDTO.event()));
         return ResponseEntity.ok().body(
             new EventListenResponseDTO(
-                "Order event successfully registered",
+                "Event successfully registered",
                 event.getId()
             )
         );

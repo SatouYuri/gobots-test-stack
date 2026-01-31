@@ -9,6 +9,7 @@ public record EventListenRequestDTO(
 
     public record Event(
         @NotBlank String type,
+        @NotBlank String subjectType,
         @NotBlank String marketplaceStoreId,
         @NotBlank String marketplaceSubjectId
     ) {}

@@ -1,5 +1,6 @@
 package dev.quatern.receiver.service;
 
+import dev.quatern.receiver.integration.client.receiver.MarketplaceClientService;
 import dev.quatern.receiver.model.Event;
 import dev.quatern.receiver.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,12 +13,11 @@ import org.springframework.stereotype.Service;
 public class EventService extends BaseService<Event> {
 
     private final EventRepository eventRepository;
+    private final MarketplaceClientService marketplaceClientService;
 
-    public Event createOrderEvent(Event event) {
-        Event persistedEvent = eventRepository.save(event);
-        //TODO: Consultar a API do Marketplace pra obter dados do pedido e salvar como snapshot JSON no evento
-        event.setSubjectSnapshot("MOCK"); //TODO: Consultar a API do Marketplace pra obter dados do pedido e salvar como snapshot JSON no evento
-        return persistedEvent;
+    public Event create(Event event) {
+        marketplaceClientService.pullUpdateSubjectAsEventSnapshot(event); //TODO: Cercar isso com try-catch e tratamento com job depois em caso de falha...
+        return eventRepository.save(event);
     }
 
 }
