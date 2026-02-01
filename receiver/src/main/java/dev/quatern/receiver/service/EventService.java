@@ -16,11 +16,17 @@ public class EventService extends BaseService<Event> {
     private final MarketplaceClientService marketplaceClientService;
 
     public Event create(Event event) {
-        //TODO: Adicionar validação de idempotência (impedir a criação de evento duplicado para o mesmo pedido)
-        Event persistedEvent = eventRepository.save(event);
-        if (event.getMarketplaceSubjectId() != null)
-            marketplaceClientService.fetchSubjectAsEventSnapshot(persistedEvent);
-        return persistedEvent;
+        return eventRepository.findByTypeAndSubjectTypeAndMarketplaceStoreIdAndMarketplaceSubjectId(
+            event.getType(),
+            event.getSubjectType(),
+            event.getMarketplaceStoreId(),
+            event.getMarketplaceSubjectId()
+        )
+        .orElseGet(() -> {
+            if (event.getMarketplaceSubjectId() != null)
+                marketplaceClientService.fetchSubjectAsEventSnapshot(event);
+            return eventRepository.save(event);
+        });
     }
 
 }

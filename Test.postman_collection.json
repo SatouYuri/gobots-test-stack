@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "cf2fb939-4210-4d85-a185-96fd728edfa6",
+		"name": "Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19697845"
+	},
+	"item": [
+		{
+			"name": "Marketplace",
+			"item": [
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"storeId\": \"e3e4c05d-dbeb-4e5d-8d9a-62ae6f2d1f5c\",\n    \"order\": {\n        \"mock\": \"campo exemplo teste\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/orders",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mock\": \"Teste\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/orders/615c65f5-c445-4560-99eb-d119384d910d",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"orders",
+										"615c65f5-c445-4560-99eb-d119384d910d"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Status",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"SHIPPED\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/orders/5422835e-4b7c-4787-b4b4-908ecd8f9a5e/status",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"orders",
+										"5422835e-4b7c-4787-b4b4-908ecd8f9a5e",
+										"status"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Store",
+					"item": [
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"store\": {\n        \"name\": \"Loja Teste\",\n        \"callbackUrl\": \"http://receiver:8081/events\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/stores",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"stores"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mock\": \"Teste\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/stores/ca7a1d53-305f-405b-aa1d-03bb8fd6dc4a",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"stores",
+										"ca7a1d53-305f-405b-aa1d-03bb8fd6dc4a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"store\": {\n        \"name\": \"Loja Teste 2\",\n        \"callbackUrl\": \"https://callback-teste.com/events2\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/stores/ca7a1d53-305f-405b-aa1d-03bb8fd6dc4a",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"stores",
+										"ca7a1d53-305f-405b-aa1d-03bb8fd6dc4a"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Receiver",
+			"item": [
+				{
+					"name": "Event",
+					"item": [
+						{
+							"name": "Listen",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"event\": {\n        \"subjectType\": \"ORDER\",\n        \"type\": \"order.created\",\n        \"marketplaceStoreId\": \"marketplaceStoreIdMock\",\n        \"marketplaceSubjectId\": \"marketplaceOrderIdMock\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8081/events",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"events"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
