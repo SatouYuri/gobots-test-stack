@@ -20,7 +20,7 @@
  
 ### Observações
 
-1) Para as etapas a seguir, é recomendado o uso da coleção Postman "Test" presente na raiz deste repositório. Ela contém as chamadas para todos os endpoints do projeto e pode facilitar a validação do funcionamento do fluxo. Caso não seja possível importar essa coleção, exemplos das requisições nela presentes estão disponíveis no final deste arquivo.
+1) Para as etapas a seguir, é recomendado o uso da coleção Postman "Test" presente na raiz deste repositório. Ela contém as chamadas para todos os endpoints do projeto e pode facilitar a validação do funcionamento do fluxo. Caso não seja possível importar essa coleção, exemplos das requisições nela presentes estão disponíveis na seguinte documentação publicada: https://documenter.getpostman.com/view/25975577/2sBXVoAThq#5566edad-e9b4-4060-8049-762be0b65cd3
 2) Além disso, já com ambos os contêineres sendo executados na sua máquina, abra no navegador ambas as URLs para acessar o gerenciador de banco de dados do H2: `http://localhost:8080/h2-console` e `http://localhost:8081/h2-console`. Em ambas, defina o campo `JDBC URL` como `jdbc:h2:mem:testdb` e clique em `Connect` para acessar o console do H2 do `marketplace` e do `receiver`, respectivamente. Para consultar o conteúdo de uma tabela, basta clicar no nome dela na aba da esquerda e, em seguida, clicar em `Run` já com a query de `SELECT * FROM ...` já exibida na tela.
 
 ### Fluxo
@@ -34,68 +34,3 @@ O fluxo geral que mostra o funcionamento das duas APIs como descrito no document
   - Com o pedido criado, é esperado que um evento `order.created` tenha sido emitido do `marketplace` para o `receiver`. Confirme a recepção do evento ao consultar a tabela `EVENTS` pelo console do H2 do `receiver` no navegador. Confirme também que o snapshot do pedido foi corretamente salvo no evento ao executar a etapa de enriquecimento durante a criação e persistência do evento no `receiver`.
   - Em seguida, consuma `POST /orders/{id}/status` para atualizar o status do pedido alvo para `PAID`, por exemplo. Essa atualização também será registrada como um evento no `receiver` e sua existência pode ser confirmada ao consultar o console do H2 do `receiver` como na etapa anterior.
   - Isso conclui o fluxo geral :)
-
-# Exemplos de Requisição
-
-### Marketplace: Store
-
-#### Create
-
-`curl --location 'localhost:8080/stores' \
---header 'Content-Type: application/json' \
---data '{
-    "store": {
-        "name": "Loja Teste",
-        "callbackUrl": "http://receiver:8081/events"
-    }
-}'`
-
-#### Get
-
-`curl --location --request GET 'localhost:8080/stores/ca7a1d53-305f-405b-aa1d-03bb8fd6dc4a' \
---header 'Content-Type: application/json' \
---data '{
-"mock": "Teste"
-}'`
-
-#### Update
-
-`curl --location --request PATCH 'localhost:8080/stores/ca7a1d53-305f-405b-aa1d-03bb8fd6dc4a' \
---header 'Content-Type: application/json' \
---data '{
-"store": {
-"name": "Loja Teste 2",
-"callbackUrl": "http://receiver:8081/events2"
-}
-}'`
-
-### Marketplace: Order
-
-#### Create
-
-`curl --location 'localhost:8080/orders' \
---header 'Content-Type: application/json' \
---data '{
-    "storeId": "e3e4c05d-dbeb-4e5d-8d9a-62ae6f2d1f5c",
-    "order": {
-        "mock": "campo exemplo teste"
-    }
-}'`
-
-#### Get
-
-`curl --location --request GET 'localhost:8080/orders/615c65f5-c445-4560-99eb-d119384d910d' \
---header 'Content-Type: application/json' \
---data '{
-    "mock": "Teste"
-}'`
-
-#### Update Status
-
-`curl --location --request PATCH 'localhost:8080/orders/5422835e-4b7c-4787-b4b4-908ecd8f9a5e/status' \
---header 'Content-Type: application/json' \
---data '{
-    "status": "PAID"
-}'`
-
-
