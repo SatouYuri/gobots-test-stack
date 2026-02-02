@@ -1,4 +1,4 @@
-# Como incializar o projeto em localhost:
+# Como inicializar o projeto em localhost:
 - Execute `docker compose up --build` na raiz do repositório (ou `docker-compose up --build`, se estiver usando a versão antiga do Docker Compose).
 - Isso fará com que dois contêineres docker sejam inicializados: `marketplace` e `receiver`.
 
